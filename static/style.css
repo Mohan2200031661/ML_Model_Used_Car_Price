@@ -1,0 +1,237 @@
+/* Existing styles... */
+
+#message-box {
+    position: fixed; /* Position it fixed to the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the box */
+    width: 80%; /* Set a width */
+    max-width: 500px; /* Maximum width */
+    padding: 20px;
+    background: url('/static/popper.png') no-repeat center center; /* Set the background image */
+    background-size: cover; /* Cover the entire area */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    color: white; /* Text color */
+    display: flex;
+    flex-direction: column; /* Arrange title and content vertically */
+    align-items: center; /* Center align the content */
+    justify-content: center; /* Center align the content */
+    z-index: 9999; /* Ensure it's above other content */
+}
+
+#message-box.hidden {
+    display: none; /* Hide the box when it has the hidden class */
+}
+
+#message-box h3 {
+    margin: 0 0 10px; /* Space below the title */
+    font-size: 24px; /* Title font size */
+}
+
+#message-box p {
+    margin: 0 0 20px; /* Space below the result text */
+    font-size: 18px; /* Font size for the result */
+    text-align: center; /* Center the text */
+}
+
+#close-message {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff4757; /* Close button color */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#close-message:hover {
+    background-color: #e84118; /* Darker shade on hover */
+}
+
+/* Other existing responsive styles... */
+/* Flowable Pane CSS */
+#flow-pane {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent background */
+    color: white;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow-y: auto; /* Scrollable content */
+    z-index: 9999; /* Ensure it appears on top of other content */
+}
+
+#flow-pane h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #FFD700; /* Gold color for the title */
+}
+
+#flow-pane p {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#flow-pane button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ff4757; /* Close button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#flow-pane button:hover {
+    background-color: #e84118;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Ensures the form remains visible and responsive */
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.container input, .container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: #4cae4c;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+    color: #28a745;
+    max-height: 200px; /* Limit max height */
+    overflow-y: auto; /* Allow vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9; /* Light background for contrast */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+    #result {
+        font-size: 16px; /* Adjust output font size for small screens */
+    }
+}

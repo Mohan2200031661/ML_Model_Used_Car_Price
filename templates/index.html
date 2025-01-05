@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction</title>
+    <style>
+
+        /* Body styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url("{{ url_for('static', filename='image.png') }}") no-repeat center center fixed; /* Use url_for for image */
+            background-size: cover; /* Ensure image covers the entire page */
+            overflow: auto; /* Make content scrollable */
+        }
+
+        /* Container styles */
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); /* Opaque black background */
+            border: 2px solid yellow; /* Yellow outline */
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 1000px; /* Max width to avoid it becoming too large */
+            overflow-y: auto; /* Ensure the container content is scrollable */
+            max-height: 90vh; /* Limit the height of the container */
+        }
+
+        /* Heading styles */
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #fff;
+            border: 2px solid transparent;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        select, input, button {
+            margin-top: 5px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease-in-out;
+        }
+
+        select:focus, input:focus {
+            border-color: neonblue;
+            box-shadow: 0 0 5px neonblue;
+        }
+
+        button {
+            background-color: yellow;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ffcc00;
+        }
+
+        /* Result field styling */
+        .result-field {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .result-field input {
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            width: 50%;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Car Price Prediction</h1>
+        <h2>Enter car details below to predict the price</h2>
+        <form id="prediction-form">
+            <label for="make">Make:</label>
+            <select id="make" name="make" required>
+                {% for make in makes %}
+                <option value="{{ make }}">{{ make }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="fuel-type">Fuel Type:</label>
+            <select id="fuel-type" name="fuel-type" required>
+                {% for fuel_type in fuel_types %}
+                <option value="{{ fuel_type }}">{{ fuel_type }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="num-of-doors">Number of Doors:</label>
+            <select id="num-of-doors" name="num-of-doors" required>
+                {% for door in num_of_doors %}
+                <option value="{{ door }}">{{ door }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="body-style">Body Style:</label>
+            <select id="body-style" name="body-style" required>
+                {% for body_style in body_styles %}
+                <option value="{{ body_style }}">{{ body_style }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="drive-wheels">Drive Wheels:</label>
+            <select id="drive-wheels" name="drive-wheels" required>
+                {% for drive_wheel in drive_wheels %}
+                <option value="{{ drive_wheel }}">{{ drive_wheel }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="curb-weight">Curb Weight:</label>
+            <input type="number" id="curb-weight" name="curb-weight" required>
+
+            <label for="engine-type">Engine Type:</label>
+            <select id="engine-type" name="engine-type" required>
+                {% for engine_type in engine_types %}
+                <option value="{{ engine_type }}">{{ engine_type }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="num-of-cylinders">Number of Cylinders:</label>
+            <select id="num-of-cylinders" name="num-of-cylinders" required>
+                {% for cylinder in num_of_cylinders %}
+                <option value="{{ cylinder }}">{{ cylinder }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="engine-size">Engine Size:</label>
+            <input type="number" id="engine-size" name="engine-size" required>
+
+            <label for="horsepower">Horsepower:</label>
+            <input type="number" id="horsepower" name="horsepower" required>
+
+            <label for="peak-rpm">Peak RPM:</label>
+            <input type="number" id="peak-rpm" name="peak-rpm" required>
+
+            <label for="city-L/100km">City (L/100km):</label>
+            <input type="number" step="any" id="city-L/100km" name="city-L/100km" required>
+
+            <label for="highway-mpg">Highway MPG:</label>
+            <input type="number" id="highway-mpg" name="highway-mpg" required>
+
+            <button type="submit">Predict Price</button>
+        </form>
+
+        <!-- Result Display Field -->
+        <div class="result-field">
+            <input type="text" id="predicted-price" placeholder="Predicted Price will appear here" readonly>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').onsubmit = async function(event) {
+            event.preventDefault();
+
+            let formData = new FormData(this);
+            let response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+
+            let result = await response.json();
+            document.getElementById('predicted-price').value = 'Predicted Price: ' + result.prediction;
+        };
+    </script>
+</body>
+</html>
